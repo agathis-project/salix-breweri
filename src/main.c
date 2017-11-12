@@ -43,11 +43,11 @@ inline void IO_init() {
 
   // ==PORTE==
   // PIN1 - MSYNC3M - initial 1
-  // PIN3 - EN-VUSBIN - initial 0
+  // PIN3 - EN-VUSBIN - initial 1
   // PIN6 - EN-SDCARD - initial 0
   PORTE.DIRSET = (PIN1_bm | PIN3_bm | PIN6_bm);
-  PORTE.OUTSET = PIN1_bm;
-  PORTE.OUTCLR = (PIN3_bm | PIN6_bm);
+  PORTE.OUTSET = (PIN1_bm | PIN3_bm);
+  PORTE.OUTCLR = PIN6_bm;
 
   // ==PORTF==
   // PIN0 - BRANCH-CTRL.TRIG - initial 0
@@ -129,10 +129,10 @@ int main(void) {
   //clock_init();
   IO_init();
 
-  sleep(10);
+  //sleep(10);
   uP_pwr_up();
-  sleep(100);
-  uP_pwr_down();
+  //sleep(100);
+  //uP_pwr_down();
 
   while(1) {
     sleep(100);

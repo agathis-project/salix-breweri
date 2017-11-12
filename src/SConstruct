@@ -1,0 +1,53 @@
+#coding=utf8
+import os
+import datetime
+################################################################################
+def version():
+  if("rel" not in ARGUMENTS.keys()):
+    return ""
+
+  print("release requested")
+  rel = ""
+  if(ARGUMENTS["rel"] == "ts"):
+    dt = datetime.datetime.now()
+    rel = dt.strftime("_%Y-%m-%dT%H%M%S")
+  elif(len(ARGUMENTS["rel"]) != 0):
+    rel = "_" + ARGUMENTS["rel"]
+  print("release: {}".format(rel))
+  return rel
+################################################################################
+PROJ_NAME = "salix-breweri"
+#PROJ_MCU = "avrxmega7"
+PROJ_MCU = "atxmega128a1u"
+#PROJ_MCU = "atmega8"
+PROJ_F_CPU = 2000000
+PROJ_VER = version()
+
+env = Environment(CC = "avr-gcc",
+        CCFLAGS = ["-g", "-Os", "-Wall", ("-mmcu=" + PROJ_MCU)],
+        LINKFLAGS = ["-g", ("-mmcu=" + PROJ_MCU)],
+        CPPDEFINES={'F_CPU': PROJ_F_CPU},
+        CPPPATH = ["."],)
+
+lstSources = []
+#for base, dirs, files in os.walk("./src/ASF"):
+#  for f in files:
+#    fp = os.path.join(base, f)
+#    if(fp.endswith(".c")):
+#      lstSources.append(fp)
+#  env["CPPPATH"].append(base)
+lstSources.append("./main.c")
+
+# Make elf
+FNAME_ELF = "{}.elf".format(PROJ_NAME)
+env.Program(FNAME_ELF, lstSources)
+
+# Make hex
+FNAME_HEX = "{}{}.hex".format(PROJ_NAME, PROJ_VER)
+env.Command(FNAME_HEX, FNAME_ELF, "avr-objcopy -j .text -j .data -O ihex $SOURCE $TARGET")
+
+# Show memory usage
+env.Command(None, FNAME_HEX, "avr-size $SOURCE; sha256sum $SOURCE")
+
+# Program the thing
+#env.Command(None, FNAME_HEX, "sudo avrdude -c dragon_jtag -P usb -p m1280 -u -U flash:w:$SOURCE")

@@ -63,21 +63,23 @@ inline void IO_init() {
 
   // ==PORTH==
   // PIN0 - USB-SW-CTRL.SWEN - initial 0
-  // PIN1 - ETHCTRL-e2.EN - initial 0
+  // PIN1 - ETHCTRL-e2.EN - initial 1
   // PIN3 - HUBCTRL.RSTn - initial 0
   // PIN4 - USB0.ID - initial 0
   // PIN5 - BRANCH-CTRL.ENn - initial 0
   // PIN6 - BRANCH-CTRL.A2 - initial 0
   PORTH.DIRSET = (PIN0_bm | PIN1_bm | PIN3_bm | PIN4_bm | PIN5_bm | PIN6_bm);
-  PORTH.OUTCLR = (PIN0_bm | PIN1_bm | PIN3_bm | PIN4_bm | PIN5_bm | PIN6_bm);
+  PORTH.OUTSET = PIN1_bm;
+  PORTH.OUTCLR = (PIN0_bm | PIN3_bm | PIN4_bm | PIN5_bm | PIN6_bm);
 
   // ==PORTJ==
   // PIN0 - EN-V1P8 - initial 0
   // PIN1 - EN-eMMC - initial 0
-  // PIN5 - ETHCTRL-e1.EN - initial 0
+  // PIN5 - ETHCTRL-e1.EN - initial 1
   // PIN7 - EN-VCORE - initial 0
   PORTJ.DIRSET = (PIN0_bm |PIN1_bm | PIN5_bm | PIN7_bm);
-  PORTJ.OUTCLR = (PIN0_bm |PIN1_bm | PIN5_bm | PIN7_bm);
+  PORTJ.OUTSET = PIN5_bm;
+  PORTJ.OUTCLR = (PIN0_bm |PIN1_bm | PIN7_bm);
 
   // ==PORTK==
   // PIN2 - BRANCH-CTRL.A0 - initial 0

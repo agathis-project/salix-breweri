@@ -9,12 +9,16 @@ CC=avr-gcc
 OBJCOPY=avr-objcopy
 OBJSIZE=avr-size
 
-CFLAGS=-g -Os -Wall -mmcu=$(PROJ_MCU) -DF_CPU=$(PROJ_F_CPU)
+CCFLAGS=-c -g -Os -Wall -mmcu=$(PROJ_MCU) -DF_CPU=$(PROJ_F_CPU)
+LDFLAGS=-g -mmcu=$(PROJ_MCU)
 
 all: $(PROJ_NAME).elf text size
 
 $(PROJ_NAME).elf: $(OBJS)
-	$(CC) $(CFLAGS) -o $@ $^
+	$(CC) $(LDFLAGS) -o $@ $^
+
+%.o: %.c
+	$(CC) $(CCFLAGS) -o $@ $^
 
 text: hex
 
@@ -32,5 +36,6 @@ hex:  $(PROJ_NAME).hex
 size: $(PROJ_NAME).hex
 	$(OBJSIZE) $<
 
+.PHONY: clean
 clean:
 	rm -vf $(PROJ_NAME).elf $(PROJ_NAME).hex $(OBJS)

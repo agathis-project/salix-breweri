@@ -4,7 +4,7 @@ Title:   Root Module Microcontroller FW
 Repo:    salix-breweri
 State:   Idea
 Type:    SW
-License: GPL
+License: CC BY-SA / GPL
 Author:  md-agathisproject, jonsnow1357
 ```
 
@@ -81,5 +81,6 @@ TBD
 
 ## 6. License
 
-* This work is licensed under Creative Commons Attribution-ShareAlike 4.0
+* This document is licensed under Creative Commons Attribution-ShareAlike 4.0
   International License ([CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/))
+* All code is licensed under [GPL v3](https://www.gnu.org/licenses/gpl.html)
